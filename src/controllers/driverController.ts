@@ -1,9 +1,9 @@
+import { driverOnboardingData } from "../constants/driverOnboardingData";
 import { DriverModel } from "../models";
 import { NextFunction, Request, Response } from "express";
 
 const getDriverSwapCount = async (req: Request, res: Response, next: NextFunction) => {
     try {
-
         const {driverId} = req.query;
 
         console.log(driverId);
@@ -15,14 +15,31 @@ const getDriverSwapCount = async (req: Request, res: Response, next: NextFunctio
             attributes: ['id',  'swapCount']
         });
 
-        res.status(200).json({ success: true, data: drivers });
+        res.status(200).json({ status: "success", data: drivers });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getDriverOnboardingData = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {driverId} = req.query;
+
+        const driverData = driverOnboardingData.drivers.find((driver: any) => driver.driverId === driverId) as unknown as any;
+
+        if(!driverData){
+            return res.status(200).json({ status: "success", data: {driverId: driverId} });
+        }
+
+        res.status(200).json({ status: "success", data: driverData });
     } catch (error) {
         next(error);
     }
 }
 
 const driverController = {
-    getDriverSwapCount
+    getDriverSwapCount,
+    getDriverOnboardingData
 }
 
 export default driverController;
