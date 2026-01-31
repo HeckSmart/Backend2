@@ -64,15 +64,32 @@ export const getNearestDskCenters = async (req: Request, res: Response, next: Ne
     const { lat, lng, limit, radiusKm } = params;
 
     const centers = await models.DskCenter.findAll({
-      attributes: ['id', 'name', 'latitude', 'longitude', 'address'],
+      attributes: [
+        'id',
+        'name',
+        'address',
+        'latitude',
+        'longitude',
+        'noOfBatteries',
+        'status',
+        'startTime',
+        'endTime',
+        'days',
+        'stateName',
+      ],
       raw: true,
     });
 
-    let withDistance = sortByDistanceFrom(centers as Array<{ latitude: number; longitude: number }>, lat, lng);
-    if (radiusKm != null) {
-      withDistance = withDistance.filter((p) => p.distanceKm <= radiusKm);
-    }
-    const data = withDistance.slice(0, limit);
+    const withDistance = sortByDistanceFrom(
+      centers as Array<{ latitude: number; longitude: number }>,
+      lat,
+      lng
+    );
+    const filtered =
+      radiusKm != null
+        ? withDistance.filter((c) => c.distanceKm <= radiusKm)
+        : withDistance;
+    const data = filtered.slice(0, limit);
 
     res.status(200).json({ status: 'success', data });
   } catch (error) {

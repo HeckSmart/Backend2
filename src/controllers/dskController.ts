@@ -1,20 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { DskModel } from "../models";
+import { getNearestDskCenters as getNearestDskCentersByLocation } from "./locationController";
 
-const getNearestDskCenters = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { latitude, longitude } = req.query;
-        const data = await DskModel.findAll({
-            where: {
-                latitude: latitude,
-                longitude: longitude,
-            },
-        });
-        res.status(200).json({ success: true, data: data });
-    } catch (error) {
-        next(error);
-    }
-}
+/** Finds nearest DSK centers by driver location (latitude, longitude). Delegates to locationController. */
+const getNearestDskCenters = (req: Request, res: Response, next: NextFunction) =>
+    getNearestDskCentersByLocation(req, res, next);
 
 const dskController = {
     getNearestDskCenters

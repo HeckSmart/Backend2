@@ -1,0 +1,430 @@
+{
+  "info": {
+    "name": "Backend2 API",
+    "description": "Full API collection for Backend2 (Express, MariaDB, Sequelize)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "driverId",
+      "value": "DRV001"
+    },
+    {
+      "key": "schemeId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Health check endpoint"
+          }
+        },
+        {
+          "name": "Readiness Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ready",
+              "host": ["{{baseUrl}}"],
+              "path": ["ready"]
+            },
+            "description": "Readiness check for DB etc."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Drivers",
+      "item": [
+        {
+          "name": "Driver Swap Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/drivers/driverSwapCount",
+              "host": ["{{baseUrl}}"],
+              "path": ["drivers", "driverSwapCount"]
+            },
+            "description": "Get driver swap count"
+          }
+        },
+        {
+          "name": "Driver Onboarding Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/drivers/onboarding/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["drivers", "onboarding", "status"]
+            },
+            "description": "Get driver onboarding data/status"
+          }
+        },
+        {
+          "name": "Nearest Partner Stations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/drivers/nearest/partner-stations?latitude=28.6139&longitude=77.2090&limit=10&radiusKm=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["drivers", "nearest", "partner-stations"],
+              "query": [
+                { "key": "latitude", "value": "28.6139", "description": "Driver latitude (required)" },
+                { "key": "longitude", "value": "77.2090", "description": "Driver longitude (required)" },
+                { "key": "limit", "value": "10", "description": "Max results (optional, default 10, max 50)" },
+                { "key": "radiusKm", "value": "50", "description": "Filter by radius in km (optional)" }
+              ]
+            },
+            "description": "Find nearest partner stations by driver location"
+          }
+        },
+        {
+          "name": "Nearest DSK Centers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/drivers/nearest/dsk-centers?latitude=28.6139&longitude=77.2090&limit=10&radiusKm=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["drivers", "nearest", "dsk-centers"],
+              "query": [
+                { "key": "latitude", "value": "28.6139", "description": "Driver latitude (required)" },
+                { "key": "longitude", "value": "77.2090", "description": "Driver longitude (required)" },
+                { "key": "limit", "value": "10", "description": "Max results (optional)" },
+                { "key": "radiusKm", "value": "50", "description": "Filter by radius in km (optional)" }
+              ]
+            },
+            "description": "Find nearest DSK centers by driver location"
+          }
+        },
+        {
+          "name": "Nearest Inactivity Centers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/drivers/nearest/inactivity-centers?latitude=28.6139&longitude=77.2090&limit=10&radiusKm=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["drivers", "nearest", "inactivity-centers"],
+              "query": [
+                { "key": "latitude", "value": "28.6139", "description": "Driver latitude (required)" },
+                { "key": "longitude", "value": "77.2090", "description": "Driver longitude (required)" },
+                { "key": "limit", "value": "10", "description": "Max results (optional)" },
+                { "key": "radiusKm", "value": "50", "description": "Filter by radius in km (optional)" }
+              ]
+            },
+            "description": "Find nearest inactivity centers by driver location"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Queries",
+      "item": [
+        {
+          "name": "Get Driver Queries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/queries",
+              "host": ["{{baseUrl}}"],
+              "path": ["queries"],
+              "query": []
+            },
+            "description": "Get driver queries (add query params as needed by your controller)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Schemes",
+      "item": [
+        {
+          "name": "List Schemes by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schemes?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["schemes"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "List all schemes for a driver"
+          }
+        },
+        {
+          "name": "Scheme Details by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schemes/details?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["schemes", "details"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get schemeName and description for a driver"
+          }
+        },
+        {
+          "name": "Scheme Name by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schemes/schemeName?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["schemes", "schemeName"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get latest scheme name for a driver"
+          }
+        },
+        {
+          "name": "Scheme Description by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schemes/description?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["schemes", "description"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get scheme description for a driver"
+          }
+        },
+        {
+          "name": "Get Scheme by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schemes/{{schemeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["schemes", "{{schemeId}}"]
+            },
+            "description": "Get one scheme by id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "List Subscriptions by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "List all subscriptions for a driver"
+          }
+        },
+        {
+          "name": "Subscription Details by Driver",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/details?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "details"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get subscriptionName, description, startDate, endDate, subscriptionPrice"
+          }
+        },
+        {
+          "name": "Subscription End Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/endDate?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "endDate"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get subscription end date for a driver"
+          }
+        },
+        {
+          "name": "Subscription Start Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/startDate?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "startDate"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get subscription start date for a driver"
+          }
+        },
+        {
+          "name": "Subscription Price",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/price?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "price"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get subscription price for a driver"
+          }
+        },
+        {
+          "name": "Subscription Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/status?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "status"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get subscription status for a driver"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Last Swap Price",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/lastSwapPrice?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "lastSwapPrice"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get last swap price for a driver"
+          }
+        },
+        {
+          "name": "Last Swap Partner ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/lastSwapPartnerId?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "lastSwapPartnerId"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get last swap partner id for a driver"
+          }
+        },
+        {
+          "name": "Last Swap History Invoice",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/lastSwapHistoryInvoice?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "lastSwapHistoryInvoice"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get last swap history invoice for a driver"
+          }
+        },
+        {
+          "name": "Last Battery Issued",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/lastBatteryIssued?driverId={{driverId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "lastBatteryIssued"],
+              "query": [
+                { "key": "driverId", "value": "{{driverId}}", "description": "Driver ID (required)" }
+              ]
+            },
+            "description": "Get last battery issued for a driver"
+          }
+        },
+        {
+          "name": "Swap History by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/swapHistoryByDateRange?startDate=2025-01-01&endDate=2025-01-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "swapHistoryByDateRange"],
+              "query": [
+                { "key": "startDate", "value": "2025-01-01", "description": "Start date (required)" },
+                { "key": "endDate", "value": "2025-01-31", "description": "End date (required)" }
+              ]
+            },
+            "description": "Get swap history between start and end date"
+          }
+        }
+      ]
+    }
+  ]
+}

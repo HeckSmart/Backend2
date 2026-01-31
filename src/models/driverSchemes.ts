@@ -19,26 +19,17 @@ export const driverSchemesModelAttributes = {
   driverId: {
     type: DataTypes.STRING,
     allowNull: false,
+    field: "driverId"
   },
   schemeName: {
     type: DataTypes.STRING,
     allowNull: false,
+    field: "schemeName"
   },
   description: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  deletedAt: {
-    type: DataTypes.DATE,
-    allowNull: true,
+    field: "description"
   },
 };
 
@@ -46,6 +37,9 @@ export const driverSchemesModelOptions = {
   tableName: "driverSchemes",
   timestamps: true,
   paranoid: true,
+  underscored: false,
+  createdAt: "created_at",
+  updatedAt: "updated_at",
   deletedAt: "deletedAt",
 };
 

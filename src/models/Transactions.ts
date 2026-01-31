@@ -35,54 +35,102 @@ export const transactionsModelAttributes = {
     batteriesReceived: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'batteriesReceived',
     },
     batteriesIssued: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'batteriesIssued',
     },
     vehicleType: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'vehicleType',
     },
     swapPrice: {
         type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'swapPrice',
+        get(this: TransactionsModel): number | null {
+            const value = this.getDataValue('swapPrice') as number | null;
+            return value != null ? value / 100 : value;
+        }
     },
     discount: {
         type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'discount',
+        get(this: TransactionsModel): number | null {
+            const value = this.getDataValue('discount') as number | null;
+            return value != null ? value / 100 : value;
+        }
     },
     date: {
         type: DataTypes.DATE,
         allowNull: false,
+        field: 'date',
     },
     driverId: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'driverId',
     },
     partnerId: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'partnerId',
     },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'status',
     },
     penalty: {
         type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'penalty',
+        get(this: TransactionsModel): number | null {
+            const value = this.getDataValue('penalty') as number | null;
+            return value != null ? value / 100 : value;
+        }
     },
     pointsUsed: {
         type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'pointsUsed',
+        get(this: TransactionsModel): number | null {
+            const value = this.getDataValue('pointsUsed') as number | null;
+            return value != null ? value / 100 : value;
+        }
     },
     createdBy: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'createdBy',
     },
     serviceCharge: {
         type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'serviceCharge',
+        get(this: TransactionsModel): number | null {
+            const value = this.getDataValue('serviceCharge') as number | null;
+            return value != null ? value / 100 : value;
+        }
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: 'createdAt',
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: 'updatedAt',
+    },
+    deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'deletedAt',
     },
 };
 
@@ -91,6 +139,9 @@ export const transactionsModelOptions = {
     timestamps: true,
     paranoid: true,
     deletedAt: "deletedAt",
+    underscored: false,
+    createdAt: "createdAt",
+    updatedAt: "updatedAt",
 };
 
 const initTransactions = (sequelize: Sequelize): typeof TransactionsModel => {

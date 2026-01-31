@@ -21,6 +21,16 @@ const getDriverSwapCount = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
+const getDriverDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {driverId} = req.query;
+        const driver = await DriverModel.findByPk(driverId as string);
+        res.status(200).json({ status: "success", data: driver });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getDriverOnboardingData = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {driverId} = req.query;
@@ -39,7 +49,8 @@ const getDriverOnboardingData = async (req: Request, res: Response, next: NextFu
 
 const driverController = {
     getDriverSwapCount,
-    getDriverOnboardingData
+    getDriverOnboardingData,
+    getDriverDetails,
 }
 
 export default driverController;

@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/driverSwapCount', driverController.getDriverSwapCount);
 router.get('/onboarding/status', driverController.getDriverOnboardingData);
+router.get('/details', driverController.getDriverDetails);
 
 // Nearest to driver location (query: latitude, longitude; optional: limit, radiusKm)
 router.get('/nearest/partner-stations', locationController.getNearestPartnerStations);

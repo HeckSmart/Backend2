@@ -28,9 +28,10 @@ const getSwapHistoryByDateRange = async (
   next: NextFunction,
 ) => {
   try {
-    const { startDate, endDate } = req.query;
+    const { driverId, startDate, endDate } = req.query;
     const data = await TransactionsModel.findAll({
       where: {
+        driverId: driverId,
         createdAt: {
           [Op.between]: [startDate, endDate],
         },

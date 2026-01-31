@@ -28,16 +28,14 @@ export const driverModelAttributes = {
     defaultValue: 0,
     field: 'swapCount'
   },
-  isOnLeave: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
 };
 
 export const driverModelOptions = {
   tableName: "drivers",
   timestamps: true,
+  underscored: false,
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
 };
 
 const initDriver = (sequelize: Sequelize): typeof DriverModel => {

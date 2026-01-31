@@ -4,8 +4,9 @@ import initDriverQueries, { DriverQueriesModel } from './DriverQueries';
 import Partner from './partners';
 import initDskCenter, { DskModel } from './DskCenter';
 import initInactivityCenter, { InactivityCenterModel } from './InactivityCenter';
-import { TransactionsModel } from './Transactions';
+import initTransactions, { TransactionsModel } from './Transactions';
 import initDriverSchemes, { DriverSchemesModel } from './driverSchemes';
+import initDriverSubscription, { driverSubscriptionModel } from './driverSubscription';
 
 initDriver(sequelize);
 initDriverQueries(sequelize);
@@ -13,6 +14,8 @@ Partner.initModel(sequelize);
 initDskCenter(sequelize);
 initInactivityCenter(sequelize);
 initDriverSchemes(sequelize);
+initTransactions(sequelize);
+initDriverSubscription(sequelize);
 export interface Models {
   Driver: typeof DriverModel;
   DriverQueries: typeof DriverQueriesModel;
@@ -21,6 +24,7 @@ export interface Models {
   InactivityCenter: typeof InactivityCenterModel;
   Transactions: typeof TransactionsModel;
   DriverSchemes: typeof DriverSchemesModel;
+  DriverSubscription: typeof driverSubscriptionModel;
   sequelize: typeof sequelize;
 }
 
@@ -32,6 +36,7 @@ const models: Models = {
   InactivityCenter: InactivityCenterModel,
   Transactions: TransactionsModel,
   DriverSchemes: DriverSchemesModel,
+  DriverSubscription: driverSubscriptionModel,
   sequelize,
 };
 
@@ -41,5 +46,5 @@ Object.values(models).forEach((m) => {
   }
 });
 
-export { DriverModel, DriverQueriesModel, Partner, DskModel, InactivityCenterModel, TransactionsModel, DriverSchemesModel, sequelize };
+export { DriverModel, DriverQueriesModel, Partner, DskModel, InactivityCenterModel, TransactionsModel, DriverSchemesModel, driverSubscriptionModel, sequelize };
 export default models;
