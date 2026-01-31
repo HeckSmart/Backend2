@@ -1,60 +1,105 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import {
+  DataTypes,
+  Model,
+  Sequelize,
+} from 'sequelize';
 
-export type DskCenterAttributes = {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-  address?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-type DskCenterInputAttributes = Optional<DskCenterAttributes, 'id' | 'createdAt' | 'updatedAt' | 'address'>;
-
-class DskCenterModel extends Model<DskCenterAttributes, DskCenterInputAttributes> implements DskCenterAttributes {
-  public id!: number;
-  public name!: string;
-  public latitude!: number;
-  public longitude!: number;
-  public address!: string | null;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+class DskModel extends Model {
+  declare id: string;
+  declare name: string;
+  declare address: string;
+  declare partnerId: string;
+  declare days: string;
+  declare startTime: string;
+  declare endTime: string;
+  declare latitude: number;
+  declare longitude: number;
+  declare noOfBatteries: number;
+  declare status: string;
+  declare stateName: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
+  declare deletedAt?: Date | null;
 }
 
-const dskCenterAttributes = {
+export const dskModelAttributes = {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.STRING,
     primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  latitude: {
-    type: DataTypes.DOUBLE,
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  partnerId: {
+    type: DataTypes.STRING,
     allowNull: false,
+  },
+  days: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  startTime: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  endTime: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  latitude: {
+    type: DataTypes.NUMBER,
+    allowNull: true,
   },
   longitude: {
-    type: DataTypes.DOUBLE,
+    type: DataTypes.NUMBER,
+    allowNull: true,
+  },
+  noOfBatteries: {
+    type: DataTypes.NUMBER,
+    allowNull: true,
+  },
+  status: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  address: {
-    type: DataTypes.TEXT,
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  deletedAt: {
+    type: DataTypes.DATE,
     allowNull: true,
+  },
+  zoneId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  stateName: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 };
 
-const initDskCenter = (sequelize: Sequelize): typeof DskCenterModel => {
-  DskCenterModel.init(dskCenterAttributes, {
-    sequelize,
-    tableName: 'dsk_centers',
-    timestamps: true,
-    underscored: true,
-  });
-  return DskCenterModel;
+export const dskModelOptions = {
+  tableName: "dsk_centers",
+  timestamps: true,
+  paranoid: true,
+  deletedAt: "deletedAt",
+};
+
+const initDskCenter = (sequelize: Sequelize): typeof DskModel => {
+  DskModel.init(dskModelAttributes, { sequelize, ...dskModelOptions });
+  return DskModel;
 };
 
 export default initDskCenter;
-export { DskCenterModel };
+export { DskModel };
